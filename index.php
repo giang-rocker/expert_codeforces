@@ -30,13 +30,20 @@ and open the template in the editor.
         echo "<marquee direction='left'><h2><b><font color='red'>Hello, I'm an expert of Codeforces !</b></font></h2></marquee>";
         ?>
         <?php
+        
+        if (isset($_GET["index"]))
+            $index = $_GET["index"];
+        else 
+            $index = "all";
+        
         $jsonurl = "http://codeforces.com/api/problemset.problems";
         $json = file_get_contents($jsonurl, 0, null, null);
         $json_output = json_decode($json, true);
         $listData = $json_output['result']['problems'];
         foreach ($listData as $data) {
-            if ($data['index']=="A")
-            echo $data['contestId']. $data['index'] . " : "  . $data['name'] . "</br>";
+            if ($data['index']== $index)
+            echo $data['contestId']. $data['index'] . " : "  . $data['name'] ."       Category  : ". $data['tags'].  "</br>";
+            
         }
         ?>
 
